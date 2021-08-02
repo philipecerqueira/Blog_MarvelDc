@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use GuzzleHttp\Psr7\Message;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-   
     public function index()
     {
         $posts = Post::all();
@@ -62,7 +62,10 @@ class PostController extends Controller
     {
         $post->delete();
 
-        return redirect()->route('posts.index')->with('success','Post deleted successfully');
-
+        // SEM AJAX return redirect()->route('posts.index')->with('success','Post deleted successfully');
+        $destroy['success'] = true;
+        $destroy['Message'] = 'Post deleted successfully';
+        echo json_encode($destroy);
+        return;
     }
 }
